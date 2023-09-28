@@ -218,6 +218,7 @@ where
         match state {
             TransferState::Running(buf) => {
                 let count = ready!(buf.poll_copy(cx, r.as_mut(), w.as_mut()))?;
+                trace!("22transfer_one_direction, count: {:?}", count);
                 *state = TransferState::ShuttingDown(count);
             }
             TransferState::ShuttingDown(count) => {
@@ -244,7 +245,9 @@ where
             b_to_a,
         } = self.project();
 
+        trace!("11transfer_one_direction, a_to_b state: {:?}", a_to_b);
         let poll_a_to_b = transfer_one_direction(cx, a_to_b, a.as_mut(), b.as_mut())?;
+        trace!("11transfer_one_direction, b_to_a state: {:?}", b_to_a);
         let poll_b_to_a = transfer_one_direction(cx, b_to_a, b.as_mut(), a.as_mut())?;
 
         // It is not a problem if ready! returns early because transfer_one_direction for the

@@ -86,6 +86,7 @@ pub fn define_command_line_options(mut app: Command) -> Command {
             .action(ArgAction::Set)
             .value_parser(clap::value_parser!(PathBuf))
             .value_hint(ValueHint::FilePath)
+            .default_value("./config.json")
             .help("Shadowsocks configuration file (https://shadowsocks.org/doc/configs.html)"),
     )
     .arg(

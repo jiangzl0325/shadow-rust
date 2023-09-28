@@ -65,6 +65,7 @@ impl SocksTcpServer {
         let udp_bind_addr = Arc::new(self.udp_bind_addr);
 
         loop {
+            //这个peer_addr是客户端的地址 即被代理的
             let (stream, peer_addr) = match self.listener.accept().await {
                 Ok(s) => s,
                 Err(err) => {

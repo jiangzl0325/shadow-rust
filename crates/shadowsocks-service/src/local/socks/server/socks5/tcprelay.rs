@@ -263,6 +263,7 @@ impl Socks5TcpHandler {
         let mut remote = match remote_result {
             Ok(remote) => {
                 // Tell the client that we are ready
+                //remote.local_addr()客户端中转的代理地址
                 let header =
                     TcpResponseHeader::new(socks5::Reply::Succeeded, Address::SocketAddress(remote.local_addr()?));
                 header.write_to(&mut stream).await?;
